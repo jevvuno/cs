@@ -13,22 +13,36 @@ jobs:
   sync-inject-build:
     name: Sync, Protect, and Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      # 1. Checkout THIS Repo (contains injector.py)
+      # 1. Checkout THIS Repo (contains injector.py + builds branch)
       - name: Checkout Tools
         uses: actions/checkout@v4.2.2
         with:
           path: "tools"
 
-      # 2. Checkout UPSTREAM Repo (duro92/ExtCloud source code)
+      - name: Checkout Builds Branch
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: "builds"
+          path: "builds"
+        continue-on-error: true
+
+      - name: Init Builds Dir
+        run: |
+          mkdir -p builds
+          rm -f builds/*.cs3 builds/plugins.json || true
+
+      # 2. Checkout UPSTREAM Source
       - name: Checkout Upstream Source
         uses: actions/checkout@v4.2.2
         with:
           repository: duro92/ExtCloud
           path: "src"
 
-      # 3. Setup Python for Injector
+      # 3. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -41,33 +55,53 @@ jobs:
           cd src
           python injector.py
 
-      # 5. Setup JDK 21 (MUST match upstream requirement)
+      # 5. Setup JDK 21
       - name: Setup JDK 21
         uses: actions/setup-java@v4.6.0
         with:
           distribution: "adopt"
           java-version: 21
 
-      # 6. Setup Android SDK (required for CloudStream builds)
+      # 6. Setup Android SDK
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3.2.2
 
-      # 7. Create local.properties (required by Gradle)
+      # 7. Create local.properties
       - name: Create local.properties
-        run: |
-          cd src
-          echo "# Auto-generated" > local.properties
+        run: echo "# Auto-generated" > src/local.properties
 
-      # 8. Build Plugins
+      # 8. Build Plugins + Generate plugins.json
       - name: Build Plugins
         run: |
           cd src
           chmod +x gradlew
-          ./gradlew make
+          ./gradlew make makePluginsJson
 
-      # 9. Upload Artifacts
-      - name: Upload Protected Extensions
+      # 9. Copy results to builds folder
+      - name: Collect Build Results
+        run: |
+          cp src/**/build/*.cs3 builds/ || true
+          cp src/build/plugins.json builds/ || true
+          echo "Files in builds:"
+          ls -la builds/
+
+      # 10. Push to builds branch (auto-deploy!)
+      - name: Deploy to Builds Branch
+        run: |
+          cd builds
+          git init || true
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git checkout -B builds
+          git add .
+          git commit -m "Auto-build $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git remote add deploy https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git || true
+          git remote set-url deploy https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push deploy builds --force
+
+      # 11. Also upload as artifact (backup)
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Protected-Extensions
-          path: "src/**/build/*.cs3"
+          path: "builds/*.cs3"
