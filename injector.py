@@ -46,10 +46,12 @@ object LicenseManager {{
             val json = com.lagradost.cloudstream3.utils.AppUtils.tryParseJson<LicenseResponse>(response.text)
 
             if (json == null) {{
-                 throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal koneksi ke server lisensi")
+                cachedStatus = null
+                throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal koneksi ke server lisensi")
             }}
 
             if (json.status != "active") {{
+                cachedStatus = null
                 val msg = json.message
                 if (msg.contains("IP belum terdaftar")) {{
                     throw com.lagradost.cloudstream3.ErrorLoadingException("Akses Ditolak: Silakan REFRESH Repository Anda untuk aktivasi ulang.")
@@ -61,8 +63,9 @@ object LicenseManager {{
             cacheTime = System.currentTimeMillis()
 
         }} catch (e: Exception) {{
+            // ALWAYS block on error - never allow bypass
+            cachedStatus = null
             if (e is com.lagradost.cloudstream3.ErrorLoadingException) throw e
-            if (cachedStatus == "active") return
             throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal cek lisensi: " + e.message)
         }}
     }}
