@@ -79,38 +79,43 @@ def inject_imports(content):
     imports = [
         "import android.content.Context",
     ]
-    pkg_match = re.search(r"^package\s+.*$", content, re.MULTILINE)
+    pkg_match = re.search(r"^package\\s+.*$", content, re.MULTILINE)
     if pkg_match:
         end_idx = pkg_match.end()
         to_add = [imp for imp in imports if imp not in content]
         if to_add:
-            content = content[:end_idx] + "\n" + "\n".join(to_add) + "\n" + content[end_idx:]
+            content = content[:end_idx] + "\\n" + "\\n".join(to_add) + "\\n" + content[end_idx:]
     return content
 
 def inject_plugin_code(content, plugin_class):
     if "object LicenseManager" not in content:
-        content += "\n" + get_license_manager_code()
+        content += "\\n" + get_license_manager_code()
 
-    match = re.search(r"class\s+" + re.escape(plugin_class) + r".*:\s*Plugin\(\)", content)
+    # Robust Plugin class detection (handles spaces, open, abstract)
+    match = re.search(r"(?:open\\s+|abstract\\s+)?class\\s+" + re.escape(plugin_class) + r"\\s*:\\s*Plugin\\(\\)", content)
+    
     if match:
         brace_idx = content.find("{", match.end())
         if brace_idx != -1:
+            # Check for load method
             if "override fun load(" in content:
                 if "premiumContext" not in content:
-                    # Try replacing super.load(context) first
+                    # BLOCK 1: Try replacing super.load(context)
                     if "super.load(context)" in content:
                         content = content.replace(
                             "super.load(context)",
-                            "super.load(context)\n        premiumContext = context"
+                            "super.load(context)\\n        premiumContext = context"
                         )
                     else:
-                        # No super.load() — insert premiumContext after load method's opening brace
-                        load_match = re.search(r"override\s+fun\s+load\s*\(", content)
+                        # BLOCK 2: No super.load call — force insertion
+                        # Find 'override fun load' start
+                        load_match = re.search(r"override\\s+fun\\s+load\\s*\\(", content)
                         if load_match:
                             load_brace = content.find("{", load_match.start())
                             if load_brace != -1:
-                                content = content[:load_brace+1] + "\n        premiumContext = context" + content[load_brace+1:]
+                                content = content[:load_brace+1] + "\\n        premiumContext = context" + content[load_brace+1:]
             else:
+                # No load method at all - inject one
                 injection = """
     override fun load(context: Context) {
         super.load(context)
@@ -123,28 +128,24 @@ def inject_plugin_code(content, plugin_class):
 def inject_provider_checks(content):
     methods = ["getMainPage", "search", "load", "loadLinks"]
     for m in methods:
-        # Use word boundary \b to prevent 'load' matching 'loadLinks'
-        pattern = r"suspend\s+fun\s+" + m + r"\b"
-        # Collect all match positions first, then inject in REVERSE order
-        # to prevent position shifts from corrupting later matches
+        pattern = r"suspend\\s+fun\\s+" + m + r"\\b"
         matches = list(re.finditer(pattern, content))
         for match in reversed(matches):
             brace_idx = content.find("{", match.start())
             if brace_idx != -1:
                 if "LicenseManager.check" in content[brace_idx:brace_idx+200]:
                     continue
-                injection = '\n        LicenseManager.check(name)\n'
+                injection = '\\n        LicenseManager.check(name)\\n'
                 content = content[:brace_idx+1] + injection + content[brace_idx+1:]
-    
-    # REMOVED: Search Bar Key Injection logic (User requested removal)
     return content
 
 # =========================================================
 # MAIN
 # =========================================================
+# KEY CHANGE: Group by (Package Name, Module Root) to prevent collisions
 package_map = {}
 
-print("Scanning...")
+print("Scanning for Kotlin files...")
 for root, dirs, files in os.walk("."):
     for file in files:
         if file.endswith(".kt"):
@@ -155,31 +156,44 @@ for root, dirs, files in os.walk("."):
             except:
                 continue
 
-            pkg_m = re.search(r"^package\s+([\w\.]+)", content, re.MULTILINE)
+            pkg_m = re.search(r"^package\\s+([\\w\\.]+)", content, re.MULTILINE)
             if not pkg_m:
                 continue
             pkg = pkg_m.group(1)
 
-            if pkg not in package_map:
-                package_map[pkg] = {'plugin': None, 'providers': []}
+            # Determine Module Root (heuristic: assume 'src' is the boundary)
+            parts = os.path.normpath(path).split(os.sep)
+            module_root = root # default
+            if "src" in parts:
+                idx = parts.index("src")
+                module_root = os.sep.join(parts[:idx])
+            
+            # Unique Key for this plugin module
+            key = (pkg, module_root)
 
-            if " : Plugin()" in content:
-                cm = re.search(r"class\s+(\w+)\s*:\s*Plugin\(\)", content)
+            if key not in package_map:
+                package_map[key] = {'plugin': None, 'providers': []}
+
+            # Identify Plugin Class
+            if " : Plugin()" in content or ":Plugin()" in content or ": Plugin()" in content:
+                cm = re.search(r"(?:open\\s+)?class\\s+(\\w+)\\s*:\\s*Plugin\\(\\)", content)
                 if cm:
-                    package_map[pkg]['plugin'] = (path, cm.group(1))
+                    package_map[key]['plugin'] = (path, cm.group(1))
 
+            # Identify Provider Class
             if ": MainAPI()" in content:
-                package_map[pkg]['providers'].append(path)
+                package_map[key]['providers'].append(path)
 
-print("Found {} packages".format(len(package_map)))
+print("Found {} unique metadata groups".format(len(package_map)))
 
-for pkg, data in package_map.items():
+for key, data in package_map.items():
+    pkg, mod_root = key
     plugin_info = data['plugin']
     providers = data['providers']
 
     if plugin_info:
         plugin_path, plugin_class = plugin_info
-        print("Injecting into Plugin: {}".format(plugin_path))
+        print(f"Injecting into Plugin: {plugin_path} (Class: {plugin_class})")
         with open(plugin_path, 'r', encoding='utf-8') as f:
             c = f.read()
         c = inject_imports(c)
@@ -188,13 +202,14 @@ for pkg, data in package_map.items():
             f.write(c)
 
         for provider_path in providers:
-            print("Protecting Provider: {}".format(provider_path))
+            print(f"  Protecting Provider: {provider_path}")
             with open(provider_path, 'r', encoding='utf-8') as f:
                 c = f.read()
             c = inject_provider_checks(c)
             with open(provider_path, 'w', encoding='utf-8') as f:
                 f.write(c)
     else:
-        print("No Plugin for package {}, skipping".format(pkg))
+        if len(providers) > 0:
+            print(f"WARNING: No Plugin class found for {pkg} in {mod_root}. {len(providers)} providers skipped.")
 
 print("ALL DONE")
