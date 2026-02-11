@@ -1,0 +1,9 @@
+{
+    "name": "PremiumStream",
+    "description": "Premium CloudStream Extensions",
+    "iconUrl": "https://avatars.githubusercontent.com/u/114850487?v=4",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/GANTI_USERNAME/GANTI_REPO/builds/plugins.json"
+    ]
+}

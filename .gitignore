@@ -1,0 +1,14 @@
+*.iml
+.gradle
+**/build/
+!**/src/**/build/
+/local.properties
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+.project
+.classpath
+local.properties
+premium.db
+node_modules/
