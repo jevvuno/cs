@@ -80,8 +80,10 @@ jobs:
       # 9. Copy results to builds folder
       - name: Collect Build Results
         run: |
+          mkdir -p builds
           cp src/**/build/*.cs3 builds/ || true
           cp src/build/plugins.json builds/ || true
+          cp tools/repo.json builds/ || true
           echo "Files in builds:"
           ls -la builds/
 
