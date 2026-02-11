@@ -7,21 +7,19 @@ import re
 API_URL = "http://172.83.15.6:3000"
 
 # =========================================================
-# LICENSE MANAGER CODE (uses CloudStream-native API)
+# LICENSE MANAGER CODE (IP-BASED AUTH)
 # =========================================================
 def get_license_manager_code():
     return f"""
 // ===================================
-// PREMIUM LICENSE MANAGER (INJECTED)
+// PREMIUM LICENSE MANAGER (IP-BASED)
 // ===================================
 var premiumContext: android.content.Context? = null
 
 object LicenseManager {{
 
     private const val API_URL = "{API_URL}"
-    private const val PREFS_NAME = "premium_prefs"
-    private const val KEY_LICENSE = "license_key"
-
+    
     private var cachedStatus: String? = null
     private var cacheTime: Long = 0
     private const val CACHE_MS = 5 * 60 * 1000L
@@ -31,40 +29,27 @@ object LicenseManager {{
         @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String = ""
     )
 
-    fun getSavedKey(): String {{
-        val ctx = premiumContext ?: return ""
-        val prefs = ctx.getSharedPreferences(PREFS_NAME, 0)
-        return prefs.getString(KEY_LICENSE, "") ?: ""
-    }}
-
-    fun saveKey(key: String) {{
-        val ctx = premiumContext ?: return
-        ctx.getSharedPreferences(PREFS_NAME, 0).edit().putString(KEY_LICENSE, key).apply()
-        cachedStatus = null
-    }}
-
     suspend fun check(apiName: String) {{
-        val key = getSavedKey()
         if (cachedStatus == "active" && System.currentTimeMillis() - cacheTime < CACHE_MS) return
 
-        if (key.isBlank()) {{
-            throw com.lagradost.cloudstream3.ErrorLoadingException("PREMIUM: Masukkan Key di Search (cari key:CS-XXXX)")
-        }}
-
         try {{
-            val ctx = premiumContext
-            val deviceId = if (ctx != null) android.provider.Settings.Secure.getString(ctx.contentResolver, android.provider.Settings.Secure.ANDROID_ID) else "unknown"
-
-            val response = com.lagradost.cloudstream3.app.post(
-                "$API_URL/api/validate",
-                json = mapOf("key" to key, "device_id" to deviceId),
+            // Call API to check if THIS IP is authorized
+            val response = com.lagradost.cloudstream3.app.get(
+                "$API_URL/api/check-ip",
                 timeout = 10
             )
 
             val json = com.lagradost.cloudstream3.utils.AppUtils.tryParseJson<LicenseResponse>(response.text)
 
-            if (json == null || json.status != "active") {{
-                val msg = json?.message ?: "License tidak valid"
+            if (json == null) {{
+                 throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal koneksi ke server lisensi")
+            }}
+
+            if (json.status != "active") {{
+                val msg = json.message
+                if (msg.contains("IP belum terdaftar")) {{
+                    throw com.lagradost.cloudstream3.ErrorLoadingException("Akses Ditolak: Silakan REFRESH Repository Anda untuk aktivasi ulang.")
+                }}
                 throw com.lagradost.cloudstream3.ErrorLoadingException("BLOCKED: $msg")
             }}
 
@@ -74,7 +59,7 @@ object LicenseManager {{
         }} catch (e: Exception) {{
             if (e is com.lagradost.cloudstream3.ErrorLoadingException) throw e
             if (cachedStatus == "active") return
-            throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal koneksi lisensi")
+            throw com.lagradost.cloudstream3.ErrorLoadingException("Gagal cek lisensi: " + e.message)
         }}
     }}
 }}
@@ -129,19 +114,8 @@ def inject_provider_checks(content):
                     continue
                 injection = '\n        LicenseManager.check(name)\n'
                 content = content[:brace_idx+1] + injection + content[brace_idx+1:]
-
-    search_match = re.search(r"suspend\s+fun\s+search.*\{", content)
-    if search_match:
-        brace_idx = content.find("{", search_match.start())
-        if brace_idx != -1 and "key:" not in content[brace_idx:brace_idx+500]:
-            logic = """
-        if (query.startsWith("key:")) {
-            val k = query.substringAfter("key:").trim()
-            LicenseManager.saveKey(k)
-            throw com.lagradost.cloudstream3.ErrorLoadingException("Key Saved: $k")
-        }
-"""
-            content = content[:brace_idx+1] + logic + content[brace_idx+1:]
+    
+    # REMOVED: Search Bar Key Injection logic (User requested removal)
     return content
 
 # =========================================================
