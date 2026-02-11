@@ -22,7 +22,7 @@ object LicenseManager {{
     
     private var cachedStatus: String? = null
     private var cacheTime: Long = 0
-    private const val CACHE_MS = 5 * 60 * 1000L
+    private const val CACHE_MS = 30 * 1000L
 
     data class LicenseResponse(
         @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String = "",
@@ -97,10 +97,19 @@ def inject_plugin_code(content, plugin_class):
         if brace_idx != -1:
             if "override fun load(" in content:
                 if "premiumContext" not in content:
-                    content = content.replace(
-                        "super.load(context)",
-                        "super.load(context)\n        premiumContext = context"
-                    )
+                    # Try replacing super.load(context) first
+                    if "super.load(context)" in content:
+                        content = content.replace(
+                            "super.load(context)",
+                            "super.load(context)\n        premiumContext = context"
+                        )
+                    else:
+                        # No super.load() — insert premiumContext after load method's opening brace
+                        load_match = re.search(r"override\s+fun\s+load\s*\(", content)
+                        if load_match:
+                            load_brace = content.find("{", load_match.start())
+                            if load_brace != -1:
+                                content = content[:load_brace+1] + "\n        premiumContext = context" + content[load_brace+1:]
             else:
                 injection = """
     override fun load(context: Context) {
@@ -114,7 +123,12 @@ def inject_plugin_code(content, plugin_class):
 def inject_provider_checks(content):
     methods = ["getMainPage", "search", "load", "loadLinks"]
     for m in methods:
-        for match in re.finditer(r"suspend\s+fun\s+" + m, content):
+        # Use word boundary \b to prevent 'load' matching 'loadLinks'
+        pattern = r"suspend\s+fun\s+" + m + r"\b"
+        # Collect all match positions first, then inject in REVERSE order
+        # to prevent position shifts from corrupting later matches
+        matches = list(re.finditer(pattern, content))
+        for match in reversed(matches):
             brace_idx = content.find("{", match.start())
             if brace_idx != -1:
                 if "LicenseManager.check" in content[brace_idx:brace_idx+200]:
