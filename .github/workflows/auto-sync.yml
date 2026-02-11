@@ -1,69 +1,73 @@
-name: Auto-Sync & Build Protected Extensions
+name: Auto-Sync and Build Protected Extensions
 
-# ⏰ Trigger setiap hari jam 4 pagi (WIB)
+concurrency:
+  group: "build"
+  cancel-in-progress: true
+
 on:
   schedule:
-    - cron: '0 21 * * *' # 21 UTC = 4 AM WIB
+    - cron: '0 21 * * *' # 4 AM WIB daily
   workflow_dispatch:
 
 jobs:
   sync-inject-build:
     name: Sync, Protect, and Build
     runs-on: ubuntu-latest
-    
-    steps:
-      # 1. Checkout Repo INI (yang isinya injector.py)
-      - name: Checkout Tools Repo
-        uses: actions/checkout@v3
-        with:
-          path: tools
 
-      # 2. Checkout Repo SUMBER
-      - name: Checkout Source Repo (duro92)
-        uses: actions/checkout@v3
+    steps:
+      # 1. Checkout THIS Repo (contains injector.py)
+      - name: Checkout Tools
+        uses: actions/checkout@v4.2.2
+        with:
+          path: "tools"
+
+      # 2. Checkout UPSTREAM Repo (duro92/ExtCloud source code)
+      - name: Checkout Upstream Source
+        uses: actions/checkout@v4.2.2
         with:
           repository: duro92/ExtCloud
-          path: source
+          path: "src"
 
-      # 3. Setup Python
+      # 3. Setup Python for Injector
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      # 4. Inject Proteksi (Jalanin Script)
-      - name: 💉 Inject License Checks
+      # 4. Inject Protection
+      - name: Inject License Checks
         run: |
-          echo "Copying injector..."
-          cp tools/injector.py source/
-          
-          echo "Running injection..."
-          cd source
+          cp tools/injector.py src/
+          cd src
           python injector.py
-          
-          echo "✅ Injection Done. Modified files:"
-          git status
 
-      # 5. Setup Java (Android biasanya butuh Java 17)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      # 5. Setup JDK 21 (MUST match upstream requirement)
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4.6.0
         with:
-          java-version: '17'
-          distribution: 'temurin'
-      
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+          distribution: "adopt"
+          java-version: 21
 
-      # 6. Build jadi .cs3
-      - name: Build Protected Plugins
+      # 6. Setup Android SDK (required for CloudStream builds)
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3.2.2
+
+      # 7. Create local.properties (required by Gradle)
+      - name: Create local.properties
         run: |
-          cd source
+          cd src
+          echo "# Auto-generated" > local.properties
+
+      # 8. Build Plugins
+      - name: Build Plugins
+        run: |
+          cd src
           chmod +x gradlew
           ./gradlew make
-      
-      # 7. Upload Hasil Build
-      - name: Upload Artifacts
+
+      # 9. Upload Artifacts
+      - name: Upload Protected Extensions
         uses: actions/upload-artifact@v4
         with:
           name: Protected-Extensions
-          path: "source/**/*.cs3"
+          path: "src/**/build/*.cs3"
