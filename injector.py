@@ -33,9 +33,13 @@ object LicenseManager {{
         if (cachedStatus == "active" && System.currentTimeMillis() - cacheTime < CACHE_MS) return
 
         try {{
-            // Call API to check if THIS IP is authorized
+            // Get unique Android Device ID
+            val ctx = premiumContext
+            val deviceId = if (ctx != null) android.provider.Settings.Secure.getString(ctx.contentResolver, android.provider.Settings.Secure.ANDROID_ID) else "unknown"
+
+            // Call API to check if THIS IP + Device is authorized
             val response = com.lagradost.cloudstream3.app.get(
-                "$API_URL/api/check-ip",
+                "$API_URL/api/check-ip?device_id=$deviceId",
                 timeout = 10
             )
 
