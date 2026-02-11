@@ -4,17 +4,24 @@ import re
 # =========================================================
 # CONFIG
 # =========================================================
-API_URL = "http://172.83.15.6:3000"  # IP VPS
+# IP VPS Anda
+API_URL = "http://172.83.15.6:3000"
 
 # =========================================================
 # LICENSE MANAGER
 # =========================================================
-def get_license_manager_code(plugin_class):
+def get_license_manager_code():
     return f"""
 // ==================================================================
 // 🔒 PREMIUM LICENSE MANAGER (INJECTED)
 // ==================================================================
+// Global Context Holder
+var premiumContext: android.content.Context? = null
+
 object LicenseManager {{
+    // Public setter for context (called from Plugin.load)
+    // No need for separate var, we use top-level premiumContext directly
+    
     private const val API_URL = "{API_URL}"
     private const val PREFS_NAME = "premium_prefs"
     private const val KEY_LICENSE = "license_key"
@@ -29,13 +36,13 @@ object LicenseManager {{
     )
 
     fun getSavedKey(): String {{
-        val ctx = {plugin_class}.context ?: return ""
+        val ctx = premiumContext ?: return ""
         val prefs = ctx.getSharedPreferences(PREFS_NAME, 0)
         return prefs.getString(KEY_LICENSE, "") ?: ""
     }}
 
     fun saveKey(key: String) {{
-        val ctx = {plugin_class}.context ?: return
+        val ctx = premiumContext ?: return
         ctx.getSharedPreferences(PREFS_NAME, 0).edit().putString(KEY_LICENSE, key).apply()
         cachedStatus = null
     }}
@@ -45,14 +52,14 @@ object LicenseManager {{
         if (cachedStatus == "active" && System.currentTimeMillis() - cacheTime < CACHE_MS) return
 
         if (key.isBlank()) {{
-            throw ErrorLoadingException("🔒 PREMIUM: Masukkan Key di Search (cari 'key:CS-XXXX')")
+            throw com.lagradost.cloudstream3.ErrorLoadingException("🔒 PREMIUM: Masukkan Key di Search (cari 'key:CS-XXXX')")
         }}
 
         try {{
-            val ctx = {plugin_class}.context
+            val ctx = premiumContext
             val deviceId = if (ctx != null) android.provider.Settings.Secure.getString(ctx.contentResolver, android.provider.Settings.Secure.ANDROID_ID) else "unknown"
 
-            val response = app.post(
+            val response = com.lagradost.cloudstream3.app.post(
                 "$API_URL/api/validate",
                 json = mapOf("key" to key, "device_id" to deviceId),
                 timeout = 10
@@ -61,16 +68,16 @@ object LicenseManager {{
             val json = com.lagradost.cloudstream3.mapper.readValue<LicenseResponse>(response.text)
             
             if (json.status != "active") {{
-                throw ErrorLoadingException("🔒 BLOCKED: ${{json.message}}")
+                throw com.lagradost.cloudstream3.ErrorLoadingException("🔒 BLOCKED: ${{json.message}}")
             }}
 
             cachedStatus = "active"
             cacheTime = System.currentTimeMillis()
 
         }} catch (e: Exception) {{
-            if (e is ErrorLoadingException) throw e
+            if (e is com.lagradost.cloudstream3.ErrorLoadingException) throw e
             if (cachedStatus == "active") return
-            throw ErrorLoadingException("🔒 Gagal koneksi lisensi")
+            throw com.lagradost.cloudstream3.ErrorLoadingException("🔒 Gagal koneksi lisensi")
         }}
     }}
 }}
@@ -78,83 +85,46 @@ object LicenseManager {{
 
 def inject_imports(content):
     imports = [
-        "import android.provider.Settings",
-        "import com.lagradost.cloudstream3.app",
-        "import com.lagradost.cloudstream3.ErrorLoadingException",
-        "import com.lagradost.cloudstream3.mapper",
-        "import android.content.Context"
+        "import android.content.Context", 
     ]
     
-    # Check package line
     pkg_match = re.search(r"^package .*$", content, re.MULTILINE)
     if pkg_match:
         end_idx = pkg_match.end()
-        # Add imports if missing
         to_add = []
         for imp in imports:
             if imp not in content:
                 to_add.append(imp)
-        
         if to_add:
             block = "\n" + "\n".join(to_add) + "\n"
             content = content[:end_idx] + block + content[end_idx:]
     return content
 
-def inject_context_to_plugin(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+def inject_plugin_code(content, plugin_class):
+    # 1. Inject LicenseManager Object
+    if "object LicenseManager" not in content:
+         content += "\n" + get_license_manager_code()
 
-    # Find class X : Plugin()
-    # Regex: class \w+ : Plugin()
-    match = re.search(r"class\s+(\w+)\s*:\s*Plugin\(\)", content)
-    if not match:
-        return None, content
-
-    plugin_class = match.group(1)
-    print(f"🧩 Found Plugin Class: {plugin_class} in {file_path}")
-
-    # Inject companion object & load method override
-    if "companion object" not in content:
-        # Inject inside class
-        # Find { after class declaration
+    # 2. Inject load() override to set context
+    match = re.search(r"class\s+" + re.escape(plugin_class) + r".*:\s*Plugin\(\)", content)
+    if match:
         class_start = match.end()
         brace_idx = content.find("{", class_start)
         if brace_idx != -1:
-            injection = f"""
-    companion object {{
-        var context: Context? = null
-    }}
-    override fun load(context: Context) {{
-        super.load(context)
-        {plugin_class}.context = context
-    }}
-            """
-            # Check if load already exists
-            if "override fun load" in content:
-                 # Too complex to patch existing load, skip for now or append
-                 print(f"⚠️ Warning: {plugin_class} has custom load, skipping context injection (might break)")
+            if "override fun load(" in content:
+                 content = content.replace("super.load(context)", "super.load(context)\n        premiumContext = context")
             else:
+                 injection = """
+    override fun load(context: Context) {
+        super.load(context)
+        premiumContext = context
+    }
+                 """
                  content = content[:brace_idx+1] + injection + content[brace_idx+1:]
-                 content = inject_imports(content)
-
-    return plugin_class, content
-
-def inject_protection(file_path, plugin_class):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
     
-    if ": MainAPI()" not in content:
-        return content
+    return content
 
-    print(f"🛡️ Protecting: {file_path} (Using context from {plugin_class})")
-    
-    content = inject_imports(content)
-
-    # Inject LicenseManager
-    if "object LicenseManager" not in content:
-        content += "\n" + get_license_manager_code(plugin_class)
-
-    # Inject checks
+def inject_provider_checks(content):
     methods = ["getMainPage", "search", "load", "loadLinks"]
     for m in methods:
         matches = re.finditer(f"suspend\s+fun\s+{m}", content)
@@ -162,70 +132,78 @@ def inject_protection(file_path, plugin_class):
             start_idx = match.start()
             brace_idx = content.find("{", start_idx)
             if brace_idx != -1:
+                # Avoid duplicates
                 if "LicenseManager.check" in content[brace_idx:brace_idx+200]: continue
+                
                 injection = '\n        LicenseManager.check(name)\n'
                 content = content[:brace_idx+1] + injection + content[brace_idx+1:]
 
-    # Inject Key Input in Search
+    # Inject Key Input
     search_match = re.search(r"suspend\s+fun\s+search.*{", content)
     if search_match:
-        s_end = search_match.end()
-        # Find first brace
         brace_idx = content.find("{", search_match.start())
         if brace_idx != -1 and "key:" not in content[brace_idx:brace_idx+500]:
              logic = """
         if (query.startsWith("key:")) {
             val k = query.substringAfter("key:").trim()
             LicenseManager.saveKey(k)
-            throw ErrorLoadingException("✅ Key Saved: $k")
+            throw com.lagradost.cloudstream3.ErrorLoadingException("✅ Key Saved: $k")
         }
              """
              content = content[:brace_idx+1] + logic + content[brace_idx+1:]
-    
+             
     return content
 
 # =========================================================
-# MAIN
+# MAIN LOGIC
 # =========================================================
-# 1. Scan for Plugins & Inject Context
-package_to_plugin = {}
+package_map = {} 
 
-for root, dirs, files in os.walk("."):
-    for file in files:
-        if file.endswith(".kt"):
-            path = os.path.join(root, file)
-            # Check for package
-            with open(path, 'r', encoding='utf-8') as f:
-                c = f.read()
-            pkg_m = re.search(r"^package\s+([\w\.]+)", c, re.MULTILINE)
-            if not pkg_m: continue
-            pkg_name = pkg_m.group(1)
-
-            # Try inject Plugin context
-            p_class, new_content = inject_context_to_plugin(path)
-            if p_class:
-                package_to_plugin[pkg_name] = p_class
-                with open(path, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-
-print(f"📦 Found Plugins: {package_to_plugin}")
-
-# 2. Inject Protection using mapped Plugin classes
+# 1. Scan
 for root, dirs, files in os.walk("."):
     for file in files:
         if file.endswith(".kt"):
             path = os.path.join(root, file)
             with open(path, 'r', encoding='utf-8') as f:
-                c = f.read()
-            pkg_m = re.search(r"^package\s+([\w\.]+)", c, re.MULTILINE)
+                content = f.read()
+            
+            # Regex updated for optional semicolon
+            pkg_m = re.search(r"^package\s+([\w\.]+);?", content, re.MULTILINE)
             if not pkg_m: continue
-            pkg_name = pkg_m.group(1)
+            pkg = pkg_m.group(1)
+            
+            if pkg not in package_map: package_map[pkg] = {'plugin': None, 'providers': []}
+            
+            if " : Plugin()" in content:
+                cm = re.search(r"class\s+(\w+)\s*:\s*Plugin\(\)", content)
+                if cm:
+                    package_map[pkg]['plugin'] = (path, cm.group(1))
+            
+            # Some providers might implement MainAPI via abstract classes
+            if ": MainAPI()" in content or ": AnimeProvider()" in content or ": MovieProvider()" in content:
+                package_map[pkg]['providers'].append(path)
 
-            if pkg_name in package_to_plugin:
-                # Same package, safe to use plugin class directly
-                new_c = inject_protection(path, package_to_plugin[pkg_name])
-                if new_c != c:
-                    with open(path, 'w', encoding='utf-8') as f:
-                        f.write(new_c)
+# 2. Process
+print(f"📦 Found Packages: {list(package_map.keys())}")
+
+for pkg, data in package_map.items():
+    plugin_info = data['plugin']
+    providers = data['providers']
+    
+    if plugin_info:
+        plugin_path, plugin_class = plugin_info
+        print(f"🔧 Injecting Manager into Plugin: {plugin_path}")
+        with open(plugin_path, 'r', encoding='utf-8') as f: c = f.read()
+        c = inject_imports(c)
+        c = inject_plugin_code(c, plugin_class)
+        with open(plugin_path, 'w', encoding='utf-8') as f: f.write(c)
+
+        for provider_path in providers:
+            print(f"🛡️ Protecting Provider: {provider_path}")
+            with open(provider_path, 'r', encoding='utf-8') as f: c = f.read()
+            c = inject_provider_checks(c)
+            with open(provider_path, 'w', encoding='utf-8') as f: f.write(c)
+    else:
+        print(f"⚠️ No Plugin class found for package {pkg}, skipping providers: {providers}")
 
 print("✅ ALL DONE")
