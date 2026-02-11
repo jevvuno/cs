@@ -1,0 +1,8 @@
+{
+    "name": "Premium Extensions",
+    "description": "Premium CloudStream extensions with license protection",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/Makairamei/aw/builds/plugins.json"
+    ]
+}
