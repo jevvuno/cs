@@ -3,6 +3,6 @@
     "description": "Premium CloudStream extensions with license protection",
     "manifestVersion": 1,
     "pluginLists": [
-        "https://raw.githubusercontent.com/Makairamei/aw/builds/plugins.json"
+        "https://raw.githubusercontent.com/jevvuno/cs/builds/plugins.json"
     ]
 }
