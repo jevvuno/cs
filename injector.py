@@ -79,21 +79,19 @@ def inject_imports(content):
     imports = [
         "import android.content.Context",
     ]
-    # FIX: Regex with single backslash via placeholder
-    pkg_match = re.search(r"^package\s+.*$", content, re.MULTILINE)
+    pkg_match = re.search(r"^package\\s+.*$", content, re.MULTILINE)
     if pkg_match:
         end_idx = pkg_match.end()
         to_add = [imp for imp in imports if imp not in content]
         if to_add:
-            content = content[:end_idx] + "\n" + "\n".join(to_add) + "\n" + content[end_idx:]
+            content = content[:end_idx] + "\\n" + "\\n".join(to_add) + "\\n" + content[end_idx:]
     return content
 
 def inject_plugin_code(content, plugin_class):
     if "object LicenseManager" not in content:
-        content += "\n" + get_license_manager_code()
+        content += "\\n" + get_license_manager_code()
 
-    # FIX: Regex with single backslash
-    match = re.search(r"(?:open\s+|abstract\s+)?class\s+" + re.escape(plugin_class) + r"\s*:\s*Plugin\(\)", content)
+    match = re.search(r"(?:open\\s+|abstract\\s+)?class\\s+" + re.escape(plugin_class) + r"\\s*:\\s*Plugin\\(\\)", content)
     
     if match:
         brace_idx = content.find("{", match.end())
@@ -103,14 +101,14 @@ def inject_plugin_code(content, plugin_class):
                     if "super.load(context)" in content:
                         content = content.replace(
                             "super.load(context)",
-                            "super.load(context)\n        premiumContext = context"
+                            "super.load(context)\\n        premiumContext = context"
                         )
                     else:
-                        load_match = re.search(r"override\s+fun\s+load\s*\(", content)
+                        load_match = re.search(r"override\\s+fun\\s+load\\s*\\(", content)
                         if load_match:
                             load_brace = content.find("{", load_match.start())
                             if load_brace != -1:
-                                content = content[:load_brace+1] + "\n        premiumContext = context" + content[load_brace+1:]
+                                content = content[:load_brace+1] + "\\n        premiumContext = context" + content[load_brace+1:]
             else:
                 injection = """
     override fun load(context: Context) {
@@ -124,15 +122,27 @@ def inject_plugin_code(content, plugin_class):
 def inject_provider_checks(content):
     methods = ["getMainPage", "search", "load", "loadLinks"]
     for m in methods:
-        pattern = r"suspend\s+fun\s+" + m + r"\b"
+        pattern = r"suspend\\s+fun\\s+" + m + r"\\b"
         matches = list(re.finditer(pattern, content))
         for match in reversed(matches):
             brace_idx = content.find("{", match.start())
             if brace_idx != -1:
                 if "LicenseManager.check" in content[brace_idx:brace_idx+200]:
                     continue
-                injection = '\n        LicenseManager.check(name)\n'
+                injection = '\\n        LicenseManager.check(name)\\n'
                 content = content[:brace_idx+1] + injection + content[brace_idx+1:]
+    return content
+
+def bump_version(content):
+    # Match: version = 123  (Kotlin DSL) or version 123 (Groovy)
+    pattern = r"(version\\s*=?\\s*)(\\d+)"
+    match = re.search(pattern, content)
+    if match:
+        prefix = match.group(1)
+        ver = int(match.group(2))
+        new_ver = ver + 1
+        print(f"  Bumping version: {ver} -> {new_ver}")
+        return content[:match.start()] + f"{prefix}{new_ver}" + content[match.end():]
     return content
 
 # =========================================================
@@ -151,7 +161,7 @@ for root, dirs, files in os.walk("."):
             except:
                 continue
 
-            pkg_m = re.search(r"^package\s+([\w\.]+)", content, re.MULTILINE)
+            pkg_m = re.search(r"^package\\s+([\\w\\.]+)", content, re.MULTILINE)
             if not pkg_m:
                 continue
             pkg = pkg_m.group(1)
@@ -165,10 +175,10 @@ for root, dirs, files in os.walk("."):
             key = (pkg, module_root)
 
             if key not in package_map:
-                package_map[key] = {'plugin': None, 'providers': []}
+                package_map[key] = {'plugin': None, 'providers': [], 'module_root': module_root}
 
             if " : Plugin()" in content or ":Plugin()" in content or ": Plugin()" in content:
-                cm = re.search(r"(?:open\s+)?class\s+(\w+)\s*:\s*Plugin\(\)", content)
+                cm = re.search(r"(?:open\\s+)?class\\s+(\\w+)\\s*:\\s*Plugin\\(\\)", content)
                 if cm:
                     package_map[key]['plugin'] = (path, cm.group(1))
 
@@ -181,6 +191,21 @@ for key, data in package_map.items():
     pkg, mod_root = key
     plugin_info = data['plugin']
     providers = data['providers']
+    module_root = data['module_root']
+
+    # Bump Version in build.gradle.kts if exists in module_root
+    gradle_files = ["build.gradle.kts", "build.gradle"]
+    for g_file in gradle_files:
+        g_path = os.path.join(module_root, g_file)
+        if os.path.exists(g_path):
+            print(f"Checking version in {g_path}...")
+            with open(g_path, 'r', encoding='utf-8') as f:
+                gc = f.read()
+            new_gc = bump_version(gc)
+            if new_gc != gc:
+                with open(g_path, 'w', encoding='utf-8') as f:
+                    f.write(new_gc)
+                break 
 
     if plugin_info:
         plugin_path, plugin_class = plugin_info
