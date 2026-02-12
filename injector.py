@@ -106,7 +106,9 @@ def process_plugins(workspace_dir):
                             if m not in ["check"]:
                                 func_pattern = r"(suspend\s+fun\s+" + m + r"(\s*\([^\}]*\)\s*\{))"
                                 if f"LicenseManager.check('{m}')" not in content:
-                                    content = re.sub(func_pattern, r'\1\n        LicenseManager.check(\'' + m + '\'')', content)
+                                    # Use double quotes for the inner call and simple concatenation
+                                    replacement = r'\1\n        LicenseManager.check("' + m + r'")'
+                                    content = re.sub(func_pattern, replacement, content)
                                     modified = True
                         
                         if modified:
