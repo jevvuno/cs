@@ -45,18 +45,18 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://anoboy.be&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 22280,
+        "fileSize": 24097,
         "status": 1,
         "language": "id",
         "authors": [
             "Duro92"
         ],
         "tvTypes": [
-            "AsianDrama",
-            "TvSeries",
-            "Movie"
+            "AnimeMovie",
+            "OVA",
+            "Anime"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "Anoboy",
         "description": "Anoboy",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Anoboy.cs3",
@@ -171,19 +171,40 @@
         "name": "Funmovieslix"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v2.hidoristream.online&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://gojodesu.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 37297,
+        "fileSize": 35054,
         "status": 1,
         "language": "id",
         "authors": [
             "Duro92"
         ],
         "tvTypes": [
-            "AsianDrama",
-            "TvSeries",
-            "Movie"
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 2,
+        "internalName": "Gojodesu",
+        "description": "Gojodesu - Anime Streaming Site",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Gojodesu.cs3",
+        "name": "Gojodesu"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v2.hidoristream.online&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 40091,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
         ],
         "version": 2,
         "internalName": "Hidoristream",
@@ -429,7 +450,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://45.11.57.243&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 28000,
+        "fileSize": 27891,
         "status": 1,
         "language": "id",
         "authors": [
@@ -532,10 +553,10 @@
         "name": "Samehadaku"
     },
     {
-        "jarFileSize": 144665,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://sflix.film&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 33336,
+        "fileSize": 33335,
         "status": 1,
         "language": "id",
         "authors": [
@@ -549,7 +570,6 @@
         ],
         "version": 2,
         "internalName": "Sflix",
-        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Sflix.jar",
         "description": "Sflix - Movie & Series subtitle indonesia",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Sflix.cs3",
         "name": "Sflix"
