@@ -174,7 +174,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://gojodesu.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 32497,
+        "fileSize": 27738,
         "status": 1,
         "language": "id",
         "authors": [
@@ -319,6 +319,26 @@
         "description": "Klikxxi",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Klikxxi.cs3",
         "name": "Klikxxi"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v14.kuramanime.tel&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 37136,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated, duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 2,
+        "internalName": "KuramanimeProvider",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/KuramanimeProvider.cs3",
+        "name": "KuramanimeProvider"
     },
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=tv7.lk21.am.in&sz=%size%",
@@ -513,7 +533,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 35272,
+        "fileSize": 30324,
         "status": 1,
         "language": "id",
         "authors": [
