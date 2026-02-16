@@ -303,7 +303,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v14.kuramanime.tel&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 37124,
+        "fileSize": 37129,
         "status": 1,
         "language": "id",
         "authors": [
@@ -595,5 +595,26 @@
         "description": "#1 best extention based on MultiAPI",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/SoraStream.cs3",
         "name": "SoraStream"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://winbu.net&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 36135,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "Movie",
+            "Anime",
+            "TvSeries"
+        ],
+        "version": 2,
+        "internalName": "Winbu",
+        "description": "Winbu",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Winbu.cs3",
+        "name": "Winbu"
     }
 ]
