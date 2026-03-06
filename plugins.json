@@ -3,7 +3,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://anichin.club&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 38772,
+        "fileSize": 39290,
         "status": 1,
         "language": "id",
         "authors": [
@@ -25,7 +25,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.animasu.top&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 27871,
+        "fileSize": 31653,
         "status": 1,
         "language": "id",
         "authors": [
@@ -36,7 +36,7 @@
             "OVA",
             "Anime"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "Animasu",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Animasu.cs3",
         "name": "Animasu"
@@ -66,7 +66,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://donghub.vip&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 25815,
+        "fileSize": 26355,
         "status": 1,
         "language": "id",
         "authors": [
@@ -85,31 +85,10 @@
         "name": "Donghub"
     },
     {
-        "iconUrl": "https://dramabox-beta-hazel.vercel.app/favicon.ico",
-        "jarFileSize": 125731,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 27464,
-        "status": 1,
-        "language": "id",
-        "authors": [
-            "Duro92"
-        ],
-        "tvTypes": [
-            "TvSeries",
-            "AsianDrama"
-        ],
-        "version": 2,
-        "internalName": "Dramabox",
-        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Dramabox.jar",
-        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Dramabox.cs3",
-        "name": "Dramabox"
-    },
-    {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://justilien.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 39700,
+        "fileSize": 40239,
         "status": 1,
         "language": "id",
         "authors": [
@@ -130,7 +109,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmapik.singles&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 25901,
+        "fileSize": 26423,
         "status": 1,
         "language": "id",
         "authors": [
@@ -150,10 +129,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://flickreels-streaming.vercel.app&size=%size%",
-        "jarFileSize": 128086,
+        "jarFileSize": 139389,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 26331,
+        "fileSize": 30340,
         "status": 1,
         "language": "id",
         "authors": [
@@ -174,7 +153,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fufafilm.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 34659,
+        "fileSize": 35202,
         "status": 1,
         "language": "id",
         "authors": [
@@ -193,10 +172,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://funmovieslix.com&size=%size%",
-        "jarFileSize": 77282,
+        "jarFileSize": 105745,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 21560,
+        "fileSize": 29510,
         "status": 1,
         "language": "id",
         "authors": [
@@ -215,10 +194,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://goodshort-streaming.vercel.app&size=%size%",
-        "jarFileSize": 132131,
+        "jarFileSize": 143452,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 27443,
+        "fileSize": 31410,
         "status": 1,
         "language": "id",
         "authors": [
@@ -239,7 +218,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v2.hidoristream.online&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 40091,
+        "fileSize": 40654,
         "status": 1,
         "language": "id",
         "authors": [
@@ -258,10 +237,10 @@
     },
     {
         "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://idlixian.com&size=16",
-        "jarFileSize": 129903,
+        "jarFileSize": 131051,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 32746,
+        "fileSize": 33274,
         "status": 1,
         "language": "id",
         "authors": [
@@ -283,7 +262,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tv2.kawanfilm21.co&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 31428,
+        "fileSize": 31942,
         "status": 1,
         "language": "id",
         "authors": [
@@ -304,7 +283,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kissasian.cam&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 36093,
+        "fileSize": 36622,
         "status": 1,
         "language": "id",
         "authors": [
@@ -323,10 +302,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kisskh.ovh&size=%size%",
-        "jarFileSize": 116251,
+        "jarFileSize": 144388,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 28038,
+        "fileSize": 34858,
         "status": 1,
         "language": "id",
         "authors": [
@@ -348,7 +327,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://klikxxi.fit&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 27878,
+        "fileSize": 28375,
         "status": 1,
         "language": "id",
         "authors": [
@@ -368,7 +347,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://layarasia.site&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 31473,
+        "fileSize": 35768,
         "status": 1,
         "language": "id",
         "authors": [
@@ -379,7 +358,7 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 3,
+        "version": 4,
         "internalName": "Layarasia",
         "description": "Layarasia",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Layarasia.cs3",
@@ -387,10 +366,10 @@
     },
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=tv7.lk21.am.in&sz=%size%",
-        "jarFileSize": 134511,
+        "jarFileSize": 135659,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 33684,
+        "fileSize": 34268,
         "status": 1,
         "language": "id",
         "authors": [
@@ -411,7 +390,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tv11.melongmovies.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 29459,
+        "fileSize": 29968,
         "status": 1,
         "language": "id",
         "authors": [
@@ -430,10 +409,10 @@
     },
     {
         "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ssstik.tv&size=16",
-        "jarFileSize": 141403,
+        "jarFileSize": 152618,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 35087,
+        "fileSize": 39110,
         "status": 1,
         "language": "id",
         "authors": [
@@ -455,7 +434,7 @@
         "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 60357,
+        "fileSize": 64540,
         "status": 1,
         "language": "id",
         "authors": [
@@ -475,7 +454,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://new18.ngefilm.site&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 30681,
+        "fileSize": 31167,
         "status": 1,
         "language": "id",
         "authors": [
@@ -496,7 +475,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://nomat.site&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 24423,
+        "fileSize": 24932,
         "status": 1,
         "language": "id",
         "authors": [
@@ -517,7 +496,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://s11.nontonanimeid.boats&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 58948,
+        "fileSize": 62628,
         "status": 1,
         "language": "id",
         "authors": [
@@ -537,7 +516,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://anime.oploverz.ac&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 33354,
+        "fileSize": 33868,
         "status": 1,
         "language": "id",
         "authors": [
@@ -558,7 +537,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://45.11.57.243&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 31793,
+        "fileSize": 32315,
         "status": 1,
         "language": "id",
         "authors": [
@@ -579,7 +558,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://otakudesu.cloud&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 30799,
+        "fileSize": 31279,
         "status": 1,
         "language": "id",
         "authors": [
@@ -597,10 +576,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ww03.pencurimovie.bond&size=%size%",
-        "jarFileSize": 82460,
+        "jarFileSize": 83608,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 22458,
+        "fileSize": 22970,
         "status": 1,
         "language": "id",
         "authors": [
@@ -621,7 +600,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 74153,
+        "fileSize": 77392,
         "status": 1,
         "language": "id",
         "authors": [
@@ -641,10 +620,10 @@
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://reelshort.dramaview.web.id&size=%size%",
-        "jarFileSize": 133575,
+        "jarFileSize": 144873,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 29897,
+        "fileSize": 33728,
         "status": 1,
         "language": "id",
         "authors": [
@@ -665,7 +644,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.samehadaku.how&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 24170,
+        "fileSize": 24766,
         "status": 1,
         "language": "id",
         "authors": [
@@ -708,7 +687,7 @@
         "iconUrl": "https://github.com/duro92/ExtCloud/blob/main/SoraStream/Icon.png",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 182355,
+        "fileSize": 182994,
         "status": 1,
         "language": "en",
         "authors": [
