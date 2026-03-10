@@ -45,7 +45,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://154.26.137.28&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 29490,
+        "fileSize": 43103,
         "status": 1,
         "language": "id",
         "authors": [
@@ -56,7 +56,7 @@
             "Anime",
             "OVA"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "AnimeSailProvider",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/AnimeSailProvider.cs3",
         "name": "AnimeSailProvider"
@@ -105,6 +105,28 @@
         "name": "Donghub"
     },
     {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://db.hafizhibnusyam.my.id&size=%size%",
+        "jarFileSize": 148235,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 32075,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 2,
+        "internalName": "Dramabox",
+        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Dramabox.jar",
+        "description": "DramaBox API",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Dramabox.cs3",
+        "name": "Dramabox"
+    },
+    {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://justilien.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
@@ -129,7 +151,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmapik.singles&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 28391,
+        "fileSize": 31142,
         "status": 1,
         "language": "id",
         "authors": [
@@ -141,7 +163,7 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 3,
+        "version": 4,
         "internalName": "FilmApik",
         "description": "Filmapik",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/FilmApik.cs3",
@@ -386,10 +408,10 @@
     },
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=tv7.lk21.am.in&sz=%size%",
-        "jarFileSize": 114661,
+        "jarFileSize": 114909,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 30328,
+        "fileSize": 30476,
         "status": 1,
         "language": "id",
         "authors": [
@@ -400,7 +422,7 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 11,
+        "version": 12,
         "internalName": "LayarKacaProvider",
         "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/LayarKacaProvider.jar",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/LayarKacaProvider.cs3",
@@ -620,7 +642,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 90252,
+        "fileSize": 100794,
         "status": 1,
         "language": "id",
         "authors": [
