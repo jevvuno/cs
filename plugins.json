@@ -639,26 +639,26 @@
         "name": "Pencurimovie"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ww192.pencurimoviesubmalay.motorcycles&size=%size%",
+        "jarFileSize": 123294,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 98629,
+        "fileSize": 33131,
         "status": 1,
         "language": "id",
         "authors": [
-            "Hexated",
-            "TeKuma25"
+            "Duro92"
         ],
         "tvTypes": [
-            "AsianDrama",
-            "TvSeries",
-            "Movie"
+            "Movie",
+            "TvSeries"
         ],
-        "version": 13,
-        "internalName": "Pusatfilm",
-        "description": "Pusatfilm is a plugin that provides streaming links for movies and TV series.",
-        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Pusatfilm.cs3",
-        "name": "Pusatfilm"
+        "version": 2,
+        "internalName": "Pmsm",
+        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Pmsm.jar",
+        "description": "PMSM (Pencuri Movie Sub Malay)",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Pmsm.cs3",
+        "name": "Pmsm"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://reelshort.dramaview.web.id&size=%size%",
