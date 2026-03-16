@@ -65,7 +65,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://anoboy.be&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 42394,
+        "fileSize": 61725,
         "status": 1,
         "language": "id",
         "authors": [
@@ -76,7 +76,7 @@
             "OVA",
             "Anime"
         ],
-        "version": 3,
+        "version": 4,
         "internalName": "Anoboy",
         "description": "Anoboy",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Anoboy.cs3",
