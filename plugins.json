@@ -105,6 +105,25 @@
         "name": "AutoEmbedProvider"
     },
     {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://azmovies.to&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 57059,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "Azmovies",
+        "description": "Azmovies",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Azmovies.cs3",
+        "name": "Azmovies"
+    },
+    {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://donghub.vip&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
@@ -190,6 +209,27 @@
         "description": "Filmapik",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/FilmApik.cs3",
         "name": "FilmApik"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://s3.iix.llc&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 29514,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "Filmkita",
+        "description": "Filmkita",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Filmkita.cs3",
+        "name": "Filmkita"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fufafilm.com&size=%size%",
