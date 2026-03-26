@@ -83,11 +83,11 @@
         "name": "Anoboy"
     },
     {
-        "iconUrl": "https://watch-v2.autoembed.cc/favicon.ico",
-        "jarFileSize": 309108,
+        "iconUrl": "https://www.themoviedb.org/favicon.ico",
+        "jarFileSize": 310123,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 65166,
+        "fileSize": 65233,
         "status": 1,
         "language": "en",
         "authors": [
@@ -100,7 +100,7 @@
         "version": 2,
         "internalName": "AutoEmbedProvider",
         "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/AutoEmbedProvider.jar",
-        "description": "AutoEmbed watch-v2 movie and TV catalog provider",
+        "description": "AutoEmbed TMDB-backed movie and TV catalog provider",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/AutoEmbedProvider.cs3",
         "name": "AutoEmbedProvider"
     },
@@ -404,6 +404,26 @@
         "name": "Klikxxi"
     },
     {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v17.kuramanime.ink&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 52167,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "duro92"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie",
+            "OVA"
+        ],
+        "version": 2,
+        "internalName": "Kuramanime",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Kuramanime.cs3",
+        "name": "Kuramanime"
+    },
+    {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://layarasia.site&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
@@ -677,28 +697,6 @@
         "description": "PMSM (Pencuri Movie Sub Malay)",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Pmsm.cs3",
         "name": "Pmsm"
-    },
-    {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://reelshort.dramaview.web.id&size=%size%",
-        "jarFileSize": 144873,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 33728,
-        "status": 1,
-        "language": "id",
-        "authors": [
-            "Duro92"
-        ],
-        "tvTypes": [
-            "TvSeries",
-            "AsianDrama"
-        ],
-        "version": 2,
-        "internalName": "Reelshort",
-        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Reelshort.jar",
-        "description": "ReelShort",
-        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Reelshort.cs3",
-        "name": "Reelshort"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.samehadaku.how&size=%size%",
