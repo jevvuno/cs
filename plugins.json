@@ -256,7 +256,7 @@
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://free-reels.com&size=%size%",
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/jevvuno/cs",
-        "fileSize": 68934,
+        "fileSize": 69958,
         "status": 1,
         "language": "id",
         "authors": [
@@ -506,6 +506,28 @@
         "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/LayarKacaProvider.jar",
         "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/LayarKacaProvider.cs3",
         "name": "LayarKacaProvider"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://melolo.com&size=%size%",
+        "jarFileSize": 102746,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/jevvuno/cs",
+        "fileSize": 29184,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 2,
+        "internalName": "Melolo",
+        "jarUrl": "https://raw.githubusercontent.com/jevvuno/cs/builds/Melolo.jar",
+        "description": "Melolo short drama provider",
+        "url": "https://raw.githubusercontent.com/jevvuno/cs/builds/Melolo.cs3",
+        "name": "Melolo"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tv11.melongmovies.com&size=%size%",
